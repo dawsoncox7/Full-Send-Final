@@ -1,0 +1,641 @@
+#include "pch.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <iomanip>
+
+using namespace std;
+void startup();
+void writing();
+void deleting();
+void searching();
+void display();
+void writing2();
+void deleting2();
+void searching2();
+void display2();
+void writing3();
+void deleting3();
+void searching3();
+void display3();
+
+class student {
+
+public:
+	int age = 0;
+	string name;
+
+	void SetGpa(float x)
+	{
+		gpa = x;
+	}
+	float GetGpa()
+	{
+		return gpa;
+	}
+
+private:
+	float gpa = 0.0;
+
+};
+
+class worker {
+
+public:
+	int paywage = 0;
+	string name;
+
+	void SetPassword(float x)
+	{
+		password = x;
+	}
+	int GetPassword()
+	{
+		return password;
+	}
+
+private:
+	int password = 0;
+
+};
+
+class paystub {
+
+public:
+	string name;
+	int monday = 0;
+	int tuesday = 0;
+	int wednesday = 0;
+	int thursday = 0;
+	int friday = 0;
+
+};
+int main()
+{
+	/*startup();
+	while (true) {
+		int opt;
+		cout << "Please Enter an option in the range 1-5 number to continue or any other key to exit:\n ";
+		cout << "\nPress 1 for New Record insertion";
+		cout << "\nPress 2 for Record Deletion";
+		cout << "\nPress 3 for Searching a Record";
+		cout << "\nPress 4 for Updating a Record";
+		cout << "\nPress 5 for Displaying All Records";
+		cout << "\nEnter option Number: ";
+		cin >> opt;
+
+		switch (opt)
+		{
+		case 1:
+		{
+			writing();
+			break;
+		}
+
+		case 2:
+		{
+			deleting();
+			break;
+		}
+
+		case 3:
+		{
+			searching();
+			break;
+		}
+		case 4:
+		{
+			deleting();
+			writing();
+			cout << setw(30) << "" << ".:.Record has been updated!.:.";
+			break;
+		}
+		case 5:
+			display();
+			break;
+		default:
+			exit(1);
+		}
+
+		cout << "--------------------------" << endl;
+	}
+	*/
+	int title = 0;
+	cout << "Worker or Superviser:" << endl << "If Worker press 1" << endl << "If Superviser press 2" << endl;
+	cin >> title;
+	if (title == 1)
+	{
+		searching2();
+		cout << "Welcome Worker, what would like to do today." << endl;
+		while (true) {
+			int opt;
+			cout << "Please Enter an option in the range 1-4 number to continue or any other key to exit:\n ";
+			cout << "\nPress 1 for New Id insertion and hours";
+			cout << "\nPress 2 for Updating Hours";
+			cout << "\nPress 3 for Viewing PayStub";
+			cout << "\nPress 4 for Changing Password";
+			cout << "\nEnter option Number: ";
+			cin >> opt;
+
+			switch (opt)
+			{
+			case 1:
+			{
+				writing3();
+				break;
+			}
+			case 2:
+			{
+				deleting3();
+				writing3();
+				cout << setw(30) << "" << ".:.Record has been updated!.:.";
+				break;
+			}
+			case 3:
+			{
+				display3();
+				break;
+			}
+			case 4:
+				//display2();
+				break;
+
+			default:
+				exit(1);
+			}
+
+			cout << "--------------------------" << endl;
+		}
+	}
+	if (title == 2)
+	{
+		startup();
+		cout << "Welcome Superviser, what would like to do today." << endl;
+		while (true) {
+			int opt;
+			cout << "Please Enter an option in the range 1-4 number to continue or any other key to exit:\n ";
+			cout << "\nPress 1 for New Employee insertion";
+			cout << "\nPress 2 for Remove Employee";
+			cout << "\nPress 3 for Updating a Record";
+			cout << "\nPress 4 for Displaying All Records";
+			cout << "\nEnter option Number: ";
+			cin >> opt;
+
+			switch (opt)
+			{
+			case 1:
+			{
+				writing2();
+				break;
+			}
+			case 2:
+			{
+				deleting2();
+				break;
+			}
+			case 3:
+			{
+				deleting2();
+				writing2();
+				cout << setw(30) << "" << ".:.Record has been updated!.:.";
+				break;
+			}
+			case 4:
+				display2();
+				break;
+
+			default:
+				exit(1);
+			}
+
+			cout << "--------------------------" << endl;
+		}
+	}
+}
+
+void writing() {
+
+	float a;
+	string line;
+	bool found = false;
+	student stdObj;
+	cout << "Please enter first name of student (This cannot have whitespaces): ";
+	cin >> stdObj.name;
+	cout << "Please enter the age of student (This can be only numbers): ";
+	cin >> stdObj.age;
+	cout << "Pleae enter the Gpa of student (This can be only numbers and dot): ";
+	cin >> a;
+	stdObj.SetGpa(a);
+	ifstream mycurrentfile;
+	mycurrentfile.open("record.txt");
+
+
+	for (unsigned int curLine = 0; getline(mycurrentfile, line); curLine++)
+	{
+		if (line.find(stdObj.name) != string::npos)
+		{
+			found = true;
+			cout << setw(30) << "" << ":.:.:found: " << stdObj.name << " on line: " << curLine << ":.:.:" << endl;
+			cout << setw(30) << "" << ":.:.:Please enter different name!!:.:.:" << endl;
+		}
+
+	}
+	mycurrentfile.close();
+	//Adding the new name
+	if (!found) {
+		ofstream myfile;
+		myfile.open("record.txt", ios::app | ios::out);
+		myfile << endl << stdObj.name << endl;
+		myfile << stdObj.age << endl;
+		myfile << stdObj.GetGpa();
+		myfile.close();
+		cout << setw(30) << "" << ".:.A record has been added.:." << endl;
+	}
+
+}
+
+void writing2() {
+
+	float a;
+	string line;
+	bool found = false;
+	worker workerinfo;
+	cout << "Please enter first name of Worker (This cannot have whitespaces): ";
+	cin >> workerinfo.name;
+	cout << "Please enter the pay wage of Worker (This can be only numbers): ";
+	cin >> workerinfo.paywage;
+	cout << "Pleae enter the password of worker (This can be only numbers and dot): ";
+	cin >> a;
+	workerinfo.SetPassword(a);
+	ifstream mycurrentfile;
+	mycurrentfile.open("workrecord.txt");
+
+
+	for (unsigned int curLine = 0; getline(mycurrentfile, line); curLine++)
+	{
+		if (line.find(workerinfo.name) != string::npos)
+		{
+			found = true;
+			cout << setw(30) << "" << ":.:.:found: " << workerinfo.name << " on line: " << curLine << ":.:.:" << endl;
+			cout << setw(30) << "" << ":.:.:Please enter different name!!:.:.:" << endl;
+		}
+
+	}
+	mycurrentfile.close();
+	//Adding the new name
+	if (!found) {
+		ofstream myfile;
+		myfile.open("workrecord.txt", ios::app | ios::out);
+		myfile << endl << workerinfo.name << endl;
+		myfile << workerinfo.paywage << endl;
+		myfile << workerinfo.GetPassword();
+		myfile.close();
+		cout << setw(30) << "" << ".:.Worker record has been added.:." << endl;
+	}
+
+}
+
+void writing3() {
+
+	float a;
+	string line;
+	bool found = false;
+	paystub weeklyhours;
+	cout << "Please enter Employee name:";
+	cin >> weeklyhours.name;
+	cout << "Please enter hours worked Monday (This cannot have whitespaces): ";
+	cin >> weeklyhours.monday;
+	cout << "Please enter hours worked Tuesday (This cannot have whitespaces): ";
+	cin >> weeklyhours.tuesday;
+	cout << "Please enter hours worked Wednesday (This cannot have whitespaces): ";
+	cin >> weeklyhours.wednesday;
+	cout << "Please enter hours worked Thursday (This cannot have whitespaces): ";
+	cin >> weeklyhours.thursday;
+	cout << "Please enter hours worked Friday (This cannot have whitespaces): ";
+	cin >> weeklyhours.friday;
+	ifstream mycurrentfile;
+	mycurrentfile.open("weeklyhours.txt");
+
+
+	for (unsigned int curLine = 0; getline(mycurrentfile, line); curLine++)
+	{
+		if (line.find(weeklyhours.id) != string::npos)
+		{
+			found = true;
+			cout << setw(30) << "" << ":.:.:found: " << weeklyhours.id << " on line: " << curLine << ":.:.:" << endl;
+			cout << setw(30) << "" << ":.:.:Please enter different name!!:.:.:" << endl;
+		}
+
+	}
+	mycurrentfile.close();
+	//Adding the new name
+	if (!found) {
+		ofstream myfile;
+		myfile.open("weeklyhours.txt", ios::app | ios::out);
+		myfile << endl << weeklyhours.id << endl;
+		myfile << weeklyhours.monday << endl;
+		myfile << weeklyhours.tuesday << endl;
+		myfile << weeklyhours.wednesday << endl;
+		myfile << weeklyhours.thursday << endl;
+		myfile << weeklyhours.friday << endl;
+		myfile.close();
+		cout << setw(30) << "" << ".:.Workers hours has been added.:." << endl;
+	}
+
+}
+
+void deleting()
+{
+
+	string line, name;
+	cout << "Please Enter the name of record you want to delete: ";
+	cin >> name;
+	ifstream myfile;
+	ofstream temp;
+	myfile.open("record.txt");
+	temp.open("temp.txt");
+	int skip = 0;
+	bool deleted = false;
+	while (getline(myfile, line)) {
+		if ((line != name) && !(skip > 0)) {
+			temp << line << endl;
+		}
+		else {
+			deleted = true;
+			if (skip == 0) {
+				skip = 2; // Skip the next two lines also
+			}
+			else {
+				--skip;
+			}
+		}
+	}
+	if (deleted) {
+		cout << setw(30) << "" << "::..::Deleting \"" << name << "\" from the records..." << endl;
+		cout << setw(30) << "" << "::..::The record with the name " << name << " has been deleted::..::" << endl;
+	}
+	else {
+		cout << setw(30) << "" << "::..::There was no \"" << name << "\" in the records..." << endl;
+
+	}
+	myfile.close();
+	temp.close();
+	remove("record.txt");
+	rename("temp.txt", "record.txt");
+
+}
+
+void deleting2()
+{
+
+	string line, name;
+	cout << "Please Enter the name of record you want to delete: ";
+	cin >> name;
+	ifstream myfile;
+	ofstream temp;
+	myfile.open("workrecord.txt");
+	temp.open("temp.txt");
+	int skip = 0;
+	bool deleted = false;
+	while (getline(myfile, line)) {
+		if ((line != name) && !(skip > 0)) {
+			temp << line << endl;
+		}
+		else {
+			deleted = true;
+			if (skip == 0) {
+				skip = 2; // Skip the next two lines also
+			}
+			else {
+				--skip;
+			}
+		}
+	}
+	if (deleted) {
+		cout << setw(30) << "" << "::..::Deleting \"" << name << "\" from the records..." << endl;
+		cout << setw(30) << "" << "::..::The record with the name " << name << " has been deleted::..::" << endl;
+	}
+	else {
+		cout << setw(30) << "" << "::..::There was no \"" << name << "\" in the records..." << endl;
+
+	}
+	myfile.close();
+	temp.close();
+	remove("workrecord.txt");
+	rename("temp.txt", "workrecord.txt");
+
+}
+
+void deleting3()
+{
+
+	string line, id;
+	cout << "Please Enter ID: ";
+	cin >> id;
+	ifstream myfile;
+	ofstream temp;
+	myfile.open("weeklyhours.txt");
+	temp.open("temp.txt");
+	int skip = 0;
+	bool deleted = false;
+	while (getline(myfile, line)) {
+		if ((line != id) && !(skip > 0)) {
+			temp << line << endl;
+		}
+		else {
+			deleted = true;
+			if (skip == 0) {
+				skip = 5; // Skip the next two lines also
+			}
+			else {
+				--skip;
+			}
+		}
+	}
+	if (deleted) {
+		cout << setw(30) << "" << "::..::Deleting \"" << id << "\" from the records..." << endl;
+		cout << setw(30) << "" << "::..::The record with the name " << id << " has been deleted::..::" << endl;
+	}
+	else {
+		cout << setw(30) << "" << "::..::There was no \"" << id << "\" in the records..." << endl;
+
+	}
+	myfile.close();
+	temp.close();
+	remove("weeklyhours.txt");
+	rename("temp.txt", "workrecord.txt");
+
+}
+
+
+void searching() {
+
+	ifstream fileInput;
+	fileInput.open("record.txt");
+	string line, search;
+	cout << "Please enter the term to search: ";
+	cin >> search;
+	bool found = false;
+	for (unsigned int curLine = 0; getline(fileInput, line); curLine++)
+	{
+		if (line.find(search) != string::npos)
+		{
+			found = true;
+			cout << setw(30) << "" << "found: " << search << " on line: " << curLine << endl;
+			break;
+		}
+
+	}
+
+	if (!found) {
+		cout << setw(30) << "" << "Error! The name " << search << "is NOT found on Line" << endl;
+
+	}
+
+	fileInput.close();
+
+}
+
+void searching2() {
+
+	ifstream fileInput;
+	fileInput.open("workrecord.txt");
+	int locked = 0;
+	string line, search;
+	cout << "Please enter the your Password: ";
+	cin >> search;
+	bool found = false;
+	//while (locked == 0)
+	{
+		
+		for (unsigned int curLine = 0; getline(fileInput, line); curLine++)
+		{
+			if (line.find(search) != string::npos)
+			{
+				found = true;
+				cout << setw(30) << "" << "Unlocked " << " system" << endl;
+				locked = 1;
+				break;
+			}
+
+		}
+
+		if (!found) {
+			cout << setw(30) << "" << "Error! The password " << search << "is not a valid password" << endl;
+		}
+	}
+	fileInput.close();
+
+}
+
+void searching3() {
+
+	ifstream fileInput;
+	fileInput.open("weeklyhours.txt");
+	int locked = 0;
+	string line, search;
+	cout << "Please enter the your ID: ";
+	cin >> search;
+	bool found = false;
+	//while (locked == 0)
+	{
+
+		for (unsigned int curLine = 0; getline(fileInput, line); curLine++)
+		{
+			if (line.find(search) != string::npos)
+			{
+				found = true;
+				cout << setw(30) << "" << "Unlocked " << " system" << endl;
+				locked = 1;
+				break;
+			}
+
+		}
+
+		if (!found) {
+			cout << setw(30) << "" << "Error! The password " << search << "is not a valid password" << endl;
+		}
+	}
+	fileInput.close();
+
+}
+
+void display() {
+
+	ifstream fileInput;
+	fileInput.open("record.txt");
+	if (fileInput.fail()) {
+		cout << "!!!There is soemthing wrong with your file!!!" << endl;
+	}
+	string temp;
+
+	while (fileInput >> temp) {
+		cout << "Name: " << temp << endl;
+		fileInput >> temp;
+		cout << "Age: " << temp << endl;
+		fileInput >> temp;
+		cout << "GPA: " << temp << endl;
+	}
+
+	fileInput.close();
+
+}
+
+void display2() {
+
+	ifstream fileInput;
+	fileInput.open("workrecord.txt");
+	if (fileInput.fail()) {
+		cout << "!!!There is soemthing wrong with your file!!!" << endl;
+	}
+	string temp;
+
+	while (fileInput >> temp) {
+		cout << "Name: " << temp << endl;
+		fileInput >> temp;
+		cout << "Paywage: " << temp << endl;
+		fileInput >> temp;
+		cout << "Password: " << temp << endl;
+	}
+
+	fileInput.close();
+	}
+
+void display3() {
+
+	ifstream fileInput;
+	fileInput.open("weeklyhours.txt");
+	if (fileInput.fail()) {
+		cout << "!!!There is soemthing wrong with your file!!!" << endl;
+	}
+	string temp;
+
+	while (fileInput >> temp) {
+		cout << "ID: " << temp << endl;
+		fileInput >> temp;
+		cout << "Monday Hours: " << temp << endl;
+		fileInput >> temp;
+		cout << "Tuesday Hours: " << temp << endl;
+		fileInput >> temp;
+		cout << "Wednesday Hours: " << temp << endl;
+		fileInput >> temp;
+		cout << "Thursday Hours: " << temp << endl;
+		fileInput >> temp;
+		cout << "Friday Hours: " << temp << endl;
+	}
+
+	fileInput.close();
+}
+void startup()
+{
+	int pinID = 7131999, locked = 0, pininput;
+	while (locked == 0)
+	{
+		cout << "Enter Worker ID or Supervisor ID pin:";
+		cin >> pininput;
+		if (pininput == pinID)
+			locked = 1;
+		else
+			cout << "Error Error!!" << endl;
+	}
+}
