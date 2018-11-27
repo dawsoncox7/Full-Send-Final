@@ -18,6 +18,7 @@ void writing3();
 void deleting3();
 void searching3();
 void display3();
+void display33();
 
 class worker {
 
@@ -596,4 +597,48 @@ void startup()
 	cout << "Please re-open the program to try again" << endl;
 	system("pause");
 	exit(1);
+}
+void display33() {
+
+	ifstream fileInput;
+	fileInput.open("weeklyhours.txt");
+	if (fileInput.fail()) {
+		cout << "!!!There is soemthing wrong with your file!!!" << endl;
+	}
+	string temp;
+	int num_lines = 0;
+	string line, search;
+	cout << "Please enter the name to search hours: ";
+	cin >> search;
+	bool found = false;
+	for (unsigned int curLine = 0; getline(fileInput, line); curLine++)
+	{
+		if (line.find(search) != string::npos)
+		{
+			found = true;
+			cout << setw(30) << "" << "found: " << search << " on line: " << curLine << endl;
+			fileInput >> temp;
+			while (getline(fileInput, line))
+			{
+				cout << "ID: " << search << endl;
+				
+				cout << "Monday Hours: " << temp << endl;
+				fileInput >> temp;
+				cout << "Tuesday Hours: " << temp << endl;
+				fileInput >> temp;
+				cout << "Wednesday Hours: " << temp << endl;
+				fileInput >> temp;
+				cout << "Thursday Hours: " << temp << endl;
+				fileInput >> temp;
+				cout << "Friday Hours: " << temp << endl;
+				break;
+			}
+		}
+	}
+	if (!found) {
+		cout << setw(30) << "" << "Error! The name " << search << "is NOT found on Line" << endl;
+	}
+
+
+	fileInput.close();
 }
