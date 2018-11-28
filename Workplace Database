@@ -1,4 +1,4 @@
-include "pch.h"
+#include "pch.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -23,7 +23,7 @@ void display33();
 class worker {
 
 public:
-	int paywage = 0;
+	double paywage = 0;
 	string name;
 
 	void SetPassword(float x)
@@ -44,11 +44,11 @@ class paystub {
 
 public:
 	string name;
-	int monday = 0;
-	int tuesday = 0;
-	int wednesday = 0;
-	int thursday = 0;
-	int friday = 0;
+	double monday = 0;
+	double tuesday = 0;
+	double wednesday = 0;
+	double thursday = 0;
+	double friday = 0;
 
 };
 int main()
@@ -110,8 +110,8 @@ int main()
 		cout << "Welcome Worker, what would like to do today." << endl;
 		while (true) {
 			int opt;
-			cout << "Please Enter an option in the range 1-4 number to continue or any other key to exit:\n ";
-			cout << "\nPress 1 for New Id insertion and hours";
+			cout << "Please Enter an option in the range 1-5 number to continue or any other key to exit:\n ";
+			cout << "\nPress 1 to Insert Weekly Hours";
 			cout << "\nPress 2 for Updating Hours";
 			cout << "\nPress 3 for Viewing PayStub";
 			cout << "\nPress 4 for Changing Password";
@@ -135,7 +135,7 @@ int main()
 			}
 			case 3:
 			{
-				display3();
+				display33();
 				break;
 			}
 			case 4:
@@ -163,7 +163,7 @@ int main()
 		cout << "Welcome Superviser, what would you like to do today." << endl;
 		while (true) {
 			int opt;
-			cout << "Please Enter an option in the range 1-4 number to continue or any other key to exit:\n ";
+			cout << "Please Enter an option in the range 1-5 number to continue or any other key to exit:\n ";
 			cout << "\nPress 1 for New Employee insertion";
 			cout << "\nPress 2 for Remove Employee";
 			cout << "\nPress 3 for Updating a Record";
@@ -372,11 +372,11 @@ void deleting2()
 		}
 	}
 	if (deleted) {
-		cout << setw(30) << "" << "::..::Deleting \"" << name << "\" from the records..." << endl;
-		cout << setw(30) << "" << "::..::The record with the name " << name << " has been deleted::..::" << endl;
+		cout << setw(30) << "" << "Deleting \"" << name << "\" from the records..." << endl;
+		cout << setw(30) << "" << "The record with the name " << name << " has been deleted" << endl;
 	}
 	else {
-		cout << setw(30) << "" << "::..::There was no \"" << name << "\" in the records..." << endl;
+		cout << setw(30) << "" << "There was no \"" << name << "\" in the records..." << endl;
 
 	}
 	myfile.close();
@@ -390,7 +390,7 @@ void deleting3()
 {
 
 	string line, id;
-	cout << "Please Enter ID: ";
+	cout << "Please Enter Your Name: ";
 	cin >> id;
 	ifstream myfile;
 	ofstream temp;
@@ -413,8 +413,9 @@ void deleting3()
 		}
 	}
 	if (deleted) {
-		cout << setw(30) << "" << "::..::Deleting \"" << id << "\" from the records..." << endl;
-		cout << setw(30) << "" << "::..::The record with the name " << id << " has been deleted::..::" << endl;
+		cout << setw(30) << "" << "Deleting hours of \"" << id << "\" from the records..." << endl;
+		cout << setw(30) << "" << "The hours for " << id << " has been deleted::..::" << endl;
+
 	}
 	else {
 		cout << setw(30) << "" << "::..::There was no \"" << id << "\" in the records..." << endl;
@@ -448,7 +449,7 @@ void searching() {
 	}
 
 	if (!found) {
-		cout << setw(30) << "" << "Error! The name " << search << "is NOT found on Line" << endl;
+		cout << setw(30) << "" << "Users hours  " << search << "were not found" << endl;
 
 	}
 
@@ -465,12 +466,12 @@ void searching2() {
 	int x = 0;
 	while (locked != 1 && x != 5)
 	{
-	cout << "Please enter the your Password: ";
-	cin >> search;
-	x++;
-	bool found = false;
-	//while (locked == 0)
-	
+		cout << "Please enter the your Password: ";
+		cin >> search;
+		x++;
+		bool found = false;
+		//while (locked == 0)
+
 
 		for (unsigned int curLine = 0; getline(fileInput, line); curLine++)
 		{
@@ -490,7 +491,7 @@ void searching2() {
 	}
 	fileInput.close();
 	if (x == 5) {
-		
+
 		cout << endl << endl;
 		cout << "Too Many Attempts\n";
 		cout << "Please re-open the program to try again" << endl;
@@ -563,7 +564,7 @@ void display3() {
 	string temp;
 
 	while (fileInput >> temp) {
-		cout << "ID: " << temp << endl;
+		cout << "Name: " << temp << endl;
 		fileInput >> temp;
 		cout << "Monday Hours: " << temp << endl;
 		fileInput >> temp;
@@ -592,11 +593,13 @@ void startup()
 		else
 			cout << "Incorrect Password" << endl;
 	}
-	cout << endl << endl;
-	cout << "Too Many Attempts\n";
-	cout << "Please re-open the program to try again" << endl;
-	system("pause");
-	exit(1);
+	if (x == 5) {
+		cout << endl << endl;
+		cout << "Too Many Attempts\n";
+		cout << "Please re-open the program to try again" << endl;
+		system("pause");
+		exit(1);
+	}
 }
 void display33() {
 
@@ -621,7 +624,7 @@ void display33() {
 			while (getline(fileInput, line))
 			{
 				cout << "ID: " << search << endl;
-				
+
 				cout << "Monday Hours: " << temp << endl;
 				fileInput >> temp;
 				cout << "Tuesday Hours: " << temp << endl;
@@ -636,7 +639,7 @@ void display33() {
 		}
 	}
 	if (!found) {
-		cout << setw(30) << "" << "Error! The name " << search << "is NOT found on Line" << endl;
+		cout << setw(30) << "" << "" << search << "'s Hours were not found! Press 1 to insert hours" << endl;
 	}
 
 
