@@ -19,6 +19,8 @@ void deleting3();
 void searching3();
 void display3();
 void display33();
+void display22();
+
 
 class worker {
 
@@ -140,7 +142,7 @@ int main()
 			}
 			case 4:
 			{
-				//display2();
+				display22();
 				break;
 			}
 			case 5:
@@ -644,4 +646,83 @@ void display33() {
 
 
 	fileInput.close();
+}
+
+void display22()
+{
+	worker workerinfo;
+	string line, name, password, paywage;
+	float newPassword;
+	int fullsend = 0;
+	cout << "Please Enter the name of record you want to change password for: ";
+	cin >> name;
+	cout << "Please Enter New Passsword for " << name << ":";
+	cin >> newPassword;
+	ifstream fileInput;
+	ofstream tempfile;
+	fileInput.open("workrecord.txt");
+	tempfile.open("temp.txt");
+	if (fileInput.fail()) 
+	{
+		cout << "!!!There is soemthing wrong with your file!!!" << endl;
+	}
+	int skip = 0;
+	bool found = false;
+	bool deleted = false;
+	for (unsigned int curLine = 0; getline(fileInput, line); curLine++)
+	{
+		if (line.find(password) != string::npos)
+		{
+			found = true;
+			cout << setw(30) << "" << "Password Accepted" << endl;
+			break;
+		}
+
+	}
+
+	if (!found) {
+		cout << setw(30) << "" << "Error! The password " << password << "is not a valid password." << endl;
+
+	}
+	fileInput.close();
+	fileInput.open("workrecord.txt");
+		while (getline(fileInput, line)) {
+			if ((line != name) && !(skip > 0)) {
+				tempfile << line << endl;
+			}
+			else {
+				deleted = true;
+				if (skip == 0) {
+					fileInput >> paywage;
+					skip = 2; 
+				}
+				else {
+					--skip;
+				}
+			}
+		}
+		if (deleted)
+		{
+			cout << setw(30) << "" << "::..::Deleting Password\"" << password << "\" from the records..." << endl;
+			cout << setw(30) << "" << "::..::The password for " << name << " has been changed to " << password << "::..::" << endl;
+		}
+		else
+		{
+			cout << setw(30) << "" << "::..::There was no \"" << name << "\" in the records..." << endl;
+		}
+		string temp;
+
+		fileInput.close();
+		tempfile.close();
+
+		ofstream myfile;
+		myfile.open("temp.txt", ios::app | ios::out);
+		workerinfo.SetPassword(newPassword);
+		myfile << name << endl;
+		myfile << paywage << endl;
+		myfile << workerinfo.GetPassword();
+		myfile.close();
+		cout << setw(30) << "" << ".:.Worker record has been added.:." << endl;
+		remove("workrecord.txt");
+		rename("temp.txt", "workrecord.txt");
 }
