@@ -216,6 +216,13 @@ void timecard() {
 	cin >> weeklyhours.name;
 	cout << "Please enter hours worked Monday (This cannot have whitespaces): ";
 	cin >> weeklyhours.monday;
+	if (weeklyhours.monday > 0 && weeklyhours.monday < 10000) {
+
+	}
+	else {
+		cout << "Contact an administrator";
+		exit(1);
+	}
 	cout << "Please enter hours worked Tuesday (This cannot have whitespaces): ";
 	cin >> weeklyhours.tuesday;
 	cout << "Please enter hours worked Wednesday (This cannot have whitespaces): ";
