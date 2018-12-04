@@ -6,16 +6,16 @@
 
 using namespace std;
 void startup();
-void writing2();
-void deleting2();
-void searching2();
-void display2();
-void writing3();
-void deleting3();
-void searching3();
-void display3();
-void display33();
-void display22();
+void employee();
+void deleting();
+void login();
+void display();
+void timecard();
+void updating();
+void unlocked();
+void hours();
+void viewPaystub();
+void changePassword();
 
 
 class worker {
@@ -57,7 +57,7 @@ int main()
 	cin >> title;
 	if (title == 1)
 	{
-		searching2();
+		login();
 		cout << "Welcome! What would you like to do today:" << endl;
 		while (true) {
 			int opt;
@@ -74,24 +74,24 @@ int main()
 			{
 			case 1:
 			{
-				writing3();
+				timecard();
 				break;
 			}
 			case 2:
 			{
-				deleting3();
-				writing3();
+				updating();
+				timecard();
 				cout << setw(30) << "" << "Hours have been updated!\n";
 				break;
 			}
 			case 3:
 			{
-				display33();
+				viewPaystub();
 				break;
 			}
 			case 4:
 			{
-				display22();
+				changePassword();
 				break;
 			}
 			case 5:
@@ -127,24 +127,24 @@ int main()
 			{
 			case 1:
 			{
-				writing2();
+				employee();
 				break;
 			}
 			case 2:
 			{
-				deleting2();
+				deleting();
 				break;
 			}
 			case 3:
 			{
-				deleting2();
-				writing2();
+				deleting();
+				employee();
 				cout << setw(30) << "" << "Employee Record has been updated!\n";
 				break;
 			}
 			case 4:
 			{
-				display2();
+				display();
 				break;
 			}
 			case 5:
@@ -165,7 +165,7 @@ int main()
 }
 
 
-void writing2() {
+void employee() {
 
 	float a;
 	string line;
@@ -193,7 +193,7 @@ void writing2() {
 
 	}
 	mycurrentfile.close();
-	
+
 	if (!found) {
 		ofstream myfile;
 		myfile.open("workrecord.txt", ios::app | ios::out);
@@ -206,7 +206,7 @@ void writing2() {
 
 }
 
-void writing3() {
+void timecard() {
 
 	float a;
 	string line;
@@ -239,7 +239,7 @@ void writing3() {
 
 	}
 	mycurrentfile.close();
-	
+
 	if (!found) {
 		ofstream myfile;
 		myfile.open("weeklyhours.txt", ios::app | ios::out);
@@ -256,7 +256,7 @@ void writing3() {
 }
 
 
-void deleting2()
+void deleting()
 {
 
 	string line, name;
@@ -297,7 +297,7 @@ void deleting2()
 
 }
 
-void deleting3()
+void updating()
 {
 
 	string line, id;
@@ -325,11 +325,11 @@ void deleting3()
 	}
 	if (deleted) {
 		cout << setw(30) << "" << "Deleting hours of \"" << id << "\" from the records..." << endl;
-		cout << setw(30) << "" << "The hours for " << id << " has been deleted::..::" << endl;
+		cout << setw(30) << "" << "The hours for " << id << " have been deleted" << endl;
 
 	}
 	else {
-		cout << setw(30) << "" << "::..::There was no \"" << id << "\" in the records..." << endl;
+		cout << setw(30) << "" << "There was no \"" << id << "\" in the records..." << endl;
 
 	}
 	myfile.close();
@@ -340,7 +340,7 @@ void deleting3()
 }
 
 
-void searching2() {
+void login() {
 
 	ifstream fileInput;
 	fileInput.open("workrecord.txt");
@@ -369,7 +369,7 @@ void searching2() {
 		}
 
 		if (!found) {
-			cout << setw(30) << "" << "Error! The password " << search << "is not a valid password" << endl;
+			cout << setw(30) << "" << "Error! The password " << search << " is not a valid password" << endl;
 		}
 	}
 	fileInput.close();
@@ -384,7 +384,7 @@ void searching2() {
 }
 
 
-void searching3() {
+void unlocked() {
 
 	ifstream fileInput;
 	fileInput.open("weeklyhours.txt");
@@ -409,7 +409,7 @@ void searching3() {
 		}
 
 		if (!found) {
-			cout << setw(30) << "" << "Error! The password " << search << "is not a valid password" << endl;
+			cout << setw(30) << "" << "Error! The password " << search << " is not a valid password" << endl;
 		}
 	}
 	fileInput.close();
@@ -417,7 +417,7 @@ void searching3() {
 }
 
 
-void display2() {
+void display() {
 
 	ifstream fileInput;
 	fileInput.open("workrecord.txt");
@@ -437,12 +437,12 @@ void display2() {
 	fileInput.close();
 }
 
-void display3() {
+void hours() {
 
 	ifstream fileInput;
 	fileInput.open("weeklyhours.txt");
 	if (fileInput.fail()) {
-		cout << "!!!There is soemthing wrong with your file!!!" << endl;
+		cout << "There is something wrong with the file" << endl;
 	}
 	string temp;
 
@@ -484,7 +484,7 @@ void startup()
 		exit(1);
 	}
 }
-void display33() {
+void viewPaystub() {
 
 	ifstream fileInput;
 	fileInput.open("weeklyhours.txt");
@@ -529,7 +529,7 @@ void display33() {
 	fileInput.close();
 }
 
-void display22()
+void changePassword()
 {
 	worker workerinfo;
 	string line, name, password, paywage;
@@ -562,7 +562,7 @@ void display22()
 	}
 
 	if (!found) {
-		cout << setw(30) << "" << "Error! The password " << password << "is not a valid password." << endl;
+		cout << setw(30) << "" << "Error! The password " << password << " is not a valid password." << endl;
 
 	}
 	fileInput.close();
